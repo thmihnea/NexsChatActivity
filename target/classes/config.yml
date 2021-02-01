@@ -1,0 +1,21 @@
+# Configuration file for NexsChatActivity, made with <3 by thmihnea
+
+# These are MySQL options. Note that the database must exist before
+# actually loading up the plugin, otherwise errors might occur!
+MySQL:
+  host: "localhost"
+  port: 3306
+  database: "nexschat"
+  username: "root"
+  password: "password"
+
+# Obviously since we don't want to monitor every single user on our server, we
+# must use a special permission granted only to staff members.
+# Every single time a player uses the chat, if he has this specific permission, we
+# will increase his amount of messages locally, and then upload it to the database.
+permission: "nexs.monitorchat"
+
+# Minimum number of characters a message should have to be
+# taken into consideration when calculating cache.
+minimum-characters: 10
+
