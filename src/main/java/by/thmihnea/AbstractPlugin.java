@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -195,7 +196,7 @@ public abstract class AbstractPlugin extends JavaPlugin {
      *
      * @param listeners - The list of listeners which have to be registered
      */
-    protected final void registerEvents(List<Listener> listeners) {
+    protected final void registerEvents(Collection<? extends Listener> listeners) {
         listeners.forEach(this::registerEvent);
     }
 
@@ -205,7 +206,7 @@ public abstract class AbstractPlugin extends JavaPlugin {
      * @param listeners - The list of listeners which have to be registered
      * @param condition - Condition to be met when registering wanted listener
      */
-    protected final void registerEventsIf(List<Listener> listeners, boolean condition) {
+    protected final void registerEventsIf(Collection<? extends Listener> listeners, boolean condition) {
         listeners.forEach(listener -> this.registerEventIf(listener, condition));
     }
 
