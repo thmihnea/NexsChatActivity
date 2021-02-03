@@ -2,6 +2,7 @@ package by.thmihnea.sql;
 
 import by.thmihnea.ChatActivity;
 import by.thmihnea.object.MonitoredPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
@@ -95,6 +96,16 @@ public class SQLUtil {
      * @throws SQLException
      */
     private static PreparedStatement getPreparedStatementDataMessages(Player player) throws SQLException {
+        StringBuilder dataMessages = getStringBuilder();
+        PreparedStatement ps = ChatActivity.getInstance().getCon().getConnection()
+                .prepareStatement(dataMessages.toString());
+        ps.setString(1, player.getUniqueId().toString());
+        for (int i = 2; i <= 31; i++)
+            ps.setInt(i, 0);
+        return ps;
+    }
+
+    private static StringBuilder getStringBuilder() {
         StringBuilder dataMessages = new StringBuilder().append("INSERT INTO `data_messages` (UUID, ");
         for (int i = 1; i <= 29; i++)
             dataMessages.append("DAY_").append(i).append(", ");
@@ -102,12 +113,7 @@ public class SQLUtil {
         for (int i = 1; i <= 30; i++)
             dataMessages.append("?, ");
         dataMessages.append("?)");
-        PreparedStatement ps = ChatActivity.getInstance().getCon().getConnection()
-                .prepareStatement(dataMessages.toString());
-        ps.setString(1, player.getUniqueId().toString());
-        for (int i = 2; i <= 31; i++)
-            ps.setInt(i, 0);
-        return ps;
+        return dataMessages;
     }
 
     /**
@@ -179,6 +185,8 @@ public class SQLUtil {
     public static void uploadData(MonitoredPlayer monitoredPlayer) {
         long start = System.currentTimeMillis();
         int cachedMessages = monitoredPlayer.getCachedMessages();
+        Player player = monitoredPlayer.getPlayer();
+        ChatActivity.getInstance().logInfo("Found a total of " + cachedMessages + " cached messages for player " + player.getName() + ".");
         String UUID = monitoredPlayer.getPlayer().getUniqueId().toString();
         String field = ChatActivity.getInstance().getField();
         int alreadyStored = getValue(TableType.DATA_MESSAGES, field, UUID);

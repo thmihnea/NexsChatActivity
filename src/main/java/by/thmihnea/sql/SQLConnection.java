@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class SQLConnection {
@@ -64,13 +65,9 @@ public class SQLConnection {
         ChatActivity.getInstance().logInfo("Attempting to create default tables in the database.");
         try {
             PreparedStatement ps1 = getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS `player_data` (UUID varchar(256), NAME varchar(256))");
-            StringBuilder dataMessages = new StringBuilder().append("(UUID varchar(256), ");
-            for (int i = 1; i <= 29; i++) {
-                dataMessages.append("DAY_").append(i).append(" varchar(256), ");
-            }
-            dataMessages.append("DAY_30 varchar(256))");
+            StringBuilder dataMessages = this.getStringBuilderDefaults();
             PreparedStatement ps2 = getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS `data_messages` " + dataMessages.toString());
-            List<PreparedStatement> statements = Arrays.asList(ps1, ps2);
+            Collection<? extends PreparedStatement> statements = Arrays.asList(ps1, ps2);
             statements.forEach(statement -> {
                 try {
                     statement.executeUpdate();
@@ -82,6 +79,20 @@ public class SQLConnection {
             exception.printStackTrace();
             ChatActivity.getInstance().logInfo("An error has occurred while setting up SQL drivers. Tables couldn't get created. (Check if your database has been set up correctly!)");
         }
+    }
+
+    /**
+     * Extracted method from {@link #setupDefaults()}
+     * to make the class look cleaner.
+     * @return {@link StringBuilder}
+     */
+    private StringBuilder getStringBuilderDefaults() {
+        StringBuilder dataMessages = new StringBuilder().append("(UUID varchar(256), ");
+        for (int i = 1; i <= 29; i++) {
+            dataMessages.append("DAY_").append(i).append(" varchar(256), ");
+        }
+        dataMessages.append("DAY_30 varchar(256))");
+        return dataMessages;
     }
 
     /**

@@ -119,7 +119,6 @@ public class ChatActivity extends AbstractPlugin {
     public void refreshDate() {
         Date date = new Date();
         this.day = date.getDay() % 30;
-        System.out.println(this.day);
     }
 
     /**

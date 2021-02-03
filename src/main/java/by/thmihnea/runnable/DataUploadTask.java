@@ -1,6 +1,7 @@
 package by.thmihnea.runnable;
 
 import by.thmihnea.ChatActivity;
+import by.thmihnea.Settings;
 import by.thmihnea.object.MonitoredPlayer;
 import by.thmihnea.object.MonitoredPlayerManager;
 import by.thmihnea.sql.SQLUtil;
@@ -18,17 +19,19 @@ public class DataUploadTask implements Runnable {
 
     /**
      * BukkitTask ID.
-     * @see {@link BukkitTask}
+     * @see BukkitTask
      */
     private BukkitTask task;
 
     /**
-     * Constructor
-     * @param player
+     * Constructor for the data syncing task
+     * to the database.
+     * @param player Player to construct the object
+     *               for.
      */
     public DataUploadTask(Player player) {
         this.player = player;
-        this.task = Bukkit.getScheduler().runTaskTimer(ChatActivity.getInstance(), this, 0L, 400L);
+        this.task = Bukkit.getScheduler().runTaskTimer(ChatActivity.getInstance(), this, 0L, 5 * Settings.MINUTE);
     }
 
     /**
