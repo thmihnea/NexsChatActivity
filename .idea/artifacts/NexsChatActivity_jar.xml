@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="NexsChatActivity:jar">
-    <output-path>$USER_HOME$/Desktop/rohi server/factions/plugins</output-path>
-    <root id="archive" name="NexsChatActivity.jar">
-      <element id="module-output" name="NexsChatActivity" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-io/commons-io/2.4/commons-io-2.4.jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>
