@@ -1,7 +1,0 @@
-name: NexsChatActivity
-author: thmihnea
-description: Plugin pentru supervizarea activitatii pe chat a staff-ului.
-main: by.thmihnea.ChatActivity
-version: 1.0
-
-api-version: 1.13
